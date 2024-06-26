@@ -1,0 +1,45 @@
+CREATE DATABASE biourb;
+
+CREATE TABLE usuario (
+    cpf VARCHAR(20) PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE area (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    localização VARCHAR(255) NOT NULL,
+    tamanho FLOAT,
+    data_criacao DATE,
+    usuario_cpf VARCHAR(20),
+    FOREIGN KEY (usuario_cpf) REFERENCES usuario(cpf)
+);
+
+CREATE TABLE tipo_de_arvore (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_cientifico VARCHAR(255) NOT NULL,
+    nome_comum VARCHAR(255),
+    caracteristicas TEXT
+);
+
+CREATE TABLE arvore (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_arvore_id INT,
+    area_id INT,
+    data_plantio DATE,
+    estado_saude VARCHAR(255) NOT NULL,
+    FOREIGN KEY (tipo_arvore_id) REFERENCES tipo_de_arvore(id),
+    FOREIGN KEY (area_id) REFERENCES area(id)
+);
+
+CREATE TABLE acompanhamento (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    arvore_id INT,
+    data_acompanhamento DATE NOT NULL,
+    altura FLOAT,
+    circunferencia FLOAT,
+    observacoes TEXT,
+    FOREIGN KEY (arvore_id) REFERENCES arvore(id)
+);
