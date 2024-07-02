@@ -1,7 +1,39 @@
-import React from 'react';
+import { useState } from 'react';
 import './Contact.css';
+import emailjs from '@emailjs/browser';
 
-function Contact() {
+const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    
+    if(name === '' || email === '' || message === ''){
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    const templateParams = {
+      from_name: name,
+      message: message,
+      email: email
+    }
+
+    emailjs.send("service_vk5hd8d", "template_c3yyd5r", templateParams, "0EZ5fZfY7LfCvIBry")
+    .then((response) => {
+      console.log("EMAIL ENVIADO", response.status, response.text)
+      setName('')
+      setEmail('')
+      setMessage('')
+
+    }, (err) => {
+      console.log("ERRO: ", err)
+    })
+
+  };
+
   return (
     <div className="contact-container">
       <header className="contact-header">
@@ -16,24 +48,45 @@ function Contact() {
       </section>
       <section>
         <h2>Formulário de Contato</h2>
-        <form>
+        <form onSubmit={sendEmail}>
           <div className="input-field">
             <label htmlFor="name">Nome:</label>
-            <input type="text" id="name" name="name" required />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div className="input-field">
             <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" required />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="input-field">
             <label htmlFor="message">Mensagem:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            ></textarea>
           </div>
           <button type="submit">Enviar Mensagem</button>
         </form>
       </section>
-    </div>
+      /</div>
   );
-}
+};
 
 export default Contact;
