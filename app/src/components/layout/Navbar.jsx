@@ -7,13 +7,12 @@ import logo from "../../img/logo.png";
 function Navbar() {
   return (
     <div className={styles.navbar}>
-      <Container>
         <Link to="/">
-          <img src={logo} alt="BioUrb" />
+          <img src={logo} alt="BioUrb" className={styles.logo} />
         </Link>
         <ul className={styles.list}>
           <li className={styles.item}>
-            <Link to="/">Home</Link>
+            <Link to="/">Início</Link>
           </li>
           <li className={styles.item}>
             <Link to="/login">Login</Link>
@@ -27,8 +26,10 @@ function Navbar() {
           <li className={styles.item}>
             <Link to="/monitoring">Monitoramento</Link>
           </li>
+          <li className={styles.item}>
+            <Link to="/contact">Contato</Link>
+          </li>
         </ul>
-      </Container>
     </div>
   );
 }
