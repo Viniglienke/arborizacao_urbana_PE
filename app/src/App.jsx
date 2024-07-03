@@ -8,6 +8,7 @@ import Areas from './components/pages/Areas';
 import Trees from './components/pages/Trees';
 import Monitoring from './components/pages/Monitoring';
 import Contact from './components/pages/Contact';
+import Register from './components/pages/Register';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/trees" element={<Trees />}></Route>
           <Route path="/monitoring" element={<Monitoring />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/register" element={<Register />}></Route>
         </Routes>
       </Container>
       <Footer />

@@ -2,9 +2,12 @@ import { useState } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import "./Login.css";
 
-const Login = () => {
+const Register = () => {
   // Estados para armazenar as entradas do usuário
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [cpf, setCPF] = useState("");
   const [password, setPassword] = useState("");
 
   // Função que é chamada quando o formulário é enviado
@@ -23,13 +26,30 @@ const Login = () => {
         <div className="input-field">
           <input
             type="text"
+            placeholder="Nome"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="input-field">
+        <input
+            type="text"
             placeholder="E-mail"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <FaUser className="icon" />
-        </div>
+          </div>
+          <div className="input-field">
+          <input
+            type="text"
+            placeholder="CPF"
+            required
+            value={cpf}
+            onChange={(e) => setCPF(e.target.value)}
+          />
+          </div>
         <div className="input-field">
           <input
             type="password"
@@ -38,24 +58,11 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FaLock className="icon" />
-        </div>
-
-        <div className="recall-forget">
-          <label>
-            <input type="checkbox" />
-            Lembre de mim
-          </label>
         </div>
         <button type="submit">Login</button>
-        <div className="signup-link">
-          <p>
-            Não tem uma conta? <a href="/register">Registar</a>{" "}
-          </p>
-        </div>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;
