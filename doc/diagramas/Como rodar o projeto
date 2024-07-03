@@ -1,0 +1,8 @@
+Acessar o diretório do projeto
+### cd app
+
+Instalar todas as dependencias
+### npm install
+
+Rodar o projeto React 
+### npm run dev
