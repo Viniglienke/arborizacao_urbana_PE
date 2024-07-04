@@ -23,25 +23,29 @@ app.post("/register", (req, res) => {
 
     db.query("SELECT * FROM usuario WHERE email = ?", [email], (err, result) => {
         if (err) {
-            res.send(err);
+            return res.status(500).json({ error: err.message });
         }
-        if (result.length == 0) {
-            bcrypt.hash(password, saltRounds, (err, hash) => {
-                db.query(
-                    "INSERT INTO usuario (cpf, nome, email, senha) VALUES (?,?,?,?)",
-                    [cpf, name, email, hash],
-                    (error, response) => {
-                        if (err) {
-                            res.send(err);
-                        }
+        if (result.length > 0) {
+            return res.status(400).json({ msg: "Email já cadastrado" });
+        }
 
-                        res.send({ msg: "Usuário cadastrado com sucesso" });
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+
+            db.query(
+                "INSERT INTO usuario (cpf, nome, email, senha) VALUES (?,?,?,?)",
+                [cpf, name, email, hash],
+                (error, response) => {
+                    if (error) {
+                        return res.status(500).json({ error: error.message });
                     }
-                );
-            });
-        } else {
-            res.send({ msg: "Email já cadastrado" });
-        }
+
+                    res.status(201).json({ msg: "Usuário cadastrado com sucesso" });
+                }
+            );
+        });
     });
 });
 
@@ -51,25 +55,25 @@ app.post("/login", (req, res) => {
 
     db.query("SELECT * FROM usuario WHERE email = ?", [email], (err, result) => {
         if (err) {
-            res.send(err);
+            return res.status(500).json({ error: err.message });
         }
-        if (result.length > 0) {
-            bcrypt.compare(password, result[0].password, (error, response) => {
-                if (error) {
-                    res.send(error);
-                }
-                if (response) {
-                    res.send({ msg: "Usuário logado" });
-                } else {
-                    res.send({ msg: "Senha incorreta" });
-                }
-            });
-        } else {
-            res.send({ msg: "Usuário não registrado!" });
+        if (result.length === 0) {
+            return res.status(404).json({ msg: "Usuário não registrado!" });
         }
+
+        bcrypt.compare(password, result[0].senha, (error, response) => {
+            if (error) {
+                return res.status(500).json({ error: error.message });
+            }
+            if (response) {
+                res.json({ msg: "Usuário logado" });
+            } else {
+                res.status(401).json({ msg: "Senha incorreta" });
+            }
+        });
     });
 });
 
 app.listen(3001, () => {
-    console.log("rodando na porta 3001");
+    console.log("Rodando na porta 3001");
 });

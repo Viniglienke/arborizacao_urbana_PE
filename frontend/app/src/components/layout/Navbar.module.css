@@ -31,3 +31,15 @@
   border-radius: 20%;
   margin-top: 5px;
 }
+
+.button {
+  background-color: transparent;
+  border: none;
+  font-size: 0.90em;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+}
+
+.button:hover {
+  color: #eeff00;
+}

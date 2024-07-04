@@ -1,55 +1,61 @@
 import { useState } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
-import Axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import "./Login.css";
 
 const Login = () => {
-  // Estados para armazenar as entradas do usuário
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signIn, signed } = useContext(AuthContext);
 
-  // Função que é chamada quando o formulário é enviado
-  const handleSubmit = (event) => {
-    // Impede que a página seja recarregada
-    event.preventDefault();
-
-    // Faz o console log das credenciais do usuário
-    console.log("Dados de Login:", { email, password });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      email,
+      password,
+    };
+    await signIn(data);
   };
-
-  return (
-    <div className="container">
-      <form onSubmit={handleSubmit}>
-        <h1>BioUrb</h1>
-        <div className="input-field">
-          <input
-            type="text"
-            placeholder="E-mail"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <FaUser className="icon" />
-        </div>
-        <div className="input-field">
-          <input
-            type="password"
-            placeholder="Senha"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <FaLock className="icon" />
-        </div>
-        <button type="submit">Login</button>
-        <div className="signup-link">
-          <p>
-            Não tem uma conta? <a href="/register">Registar</a>{" "}
-          </p>
-        </div>
-      </form>
-    </div>
-  );
+  console.log(signed);
+  if (!signed) {
+    return (
+      <div className="container">
+        <form onSubmit={handleSubmit}>
+          <h1>BioUrb</h1>
+          <div className="input-field">
+            <input
+              type="text"
+              placeholder="E-mail"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <FaUser className="icon" />
+          </div>
+          <div className="input-field">
+            <input
+              type="password"
+              placeholder="Senha"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FaLock className="icon" />
+          </div>
+          <button type="submit">Login</button>
+          <div className="signup-link">
+            <p>
+              Não tem uma conta? <a href="/register">Registar</a>{" "}
+            </p>
+          </div>
+        </form>
+      </div>
+    );
+  } else {
+    return <Navigate to="/home" />;
+  }
 };
 
 export default Login;

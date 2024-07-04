@@ -46,7 +46,7 @@ const Register = () => {
     }).then((response) => {
       console.log(response);
       alert("Usuário cadastrado com sucesso! Redirecionando para o login...");
-      navigate("/login");
+      navigate("/");
     });
   };
 
@@ -111,7 +111,7 @@ const Register = () => {
         <button type="submit">Registrar</button>
         <div className="signup-link">
           <p>
-            Já tem uma conta? <a href="/login">Entrar</a>{" "}
+            Já tem uma conta? <a href="/">Entrar</a>{" "}
           </p>
         </div>
       </form>
