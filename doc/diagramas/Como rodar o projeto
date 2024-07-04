@@ -1,8 +1,23 @@
+FRONTEND
+
 Acessar o diretório do projeto
-### cd app
+### cd frontend/app
 
 Instalar todas as dependencias
 ### npm install
 
 Rodar o projeto React 
 ### npm run dev
+
+
+
+BACKEND
+
+Acessar o diretório do projeto
+### cd backend
+
+Instalar todas as dependencias
+### npm install
+
+Rodar o projeto React 
+### npm run devStart
