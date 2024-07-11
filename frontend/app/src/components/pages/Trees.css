@@ -1,0 +1,51 @@
+* {
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+color: #000000; 
+}
+
+.container {
+max-width: 600px;
+text-align: center;
+margin-top: 70px;
+margin-bottom: 70px;
+padding-left: 20px;
+padding-top: 20px;
+padding-right: 40px;
+padding-bottom: 20px;
+
+border: 1px solid #bdbaba;
+border-radius: 30px;
+background-color: #f0f0f0;
+}
+
+.input-field {
+margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+width: 100%;
+padding: 10px;
+font-size: 16px;
+border: 1px solid #000000;
+border-radius: 4px;
+}
+
+button[type="submit"] {
+padding: 10px 20px;
+font-size: 18px;
+background-color: #177214;
+color: #fff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+button[type="submit"]:hover {
+background-color: #0056b3;
+}
+
+desc {
+    color: black;
+}

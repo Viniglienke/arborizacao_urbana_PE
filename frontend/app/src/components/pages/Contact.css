@@ -1,0 +1,77 @@
+.contact-container {
+  width: 100%;
+  color: #555;
+  font-size: 1.2em;
+  margin: 0 500px;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 40px;
+  padding-bottom: 20px; 
+  align-items: center;
+  text-align: center;
+  font-size: 1.2em;
+  border: 1px solid #bdbaba;
+  border-radius: 30px;
+  margin-top: 10px;
+  background-color: #f0f0f0;
+}
+
+.contact-header {
+  margin-bottom: 20px;
+}
+
+.contact-header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.contact-header p {
+  font-size: 1.2em;
+  color: #155802;
+}
+
+.input-field {
+  margin-bottom: 15px;
+  text-align: left;
+  border: #000000;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-field input{
+  color: black;
+}
+
+.input-field textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.input-field textarea {
+  resize: vertical;
+  color: black
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
