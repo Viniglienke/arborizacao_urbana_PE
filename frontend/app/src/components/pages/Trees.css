@@ -12,14 +12,34 @@ padding-left: 20px;
 padding-top: 20px;
 padding-right: 40px;
 padding-bottom: 20px;
-
-border: 1px solid #bdbaba;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 border-radius: 30px;
 background-color: #f0f0f0;
 }
 
 .input-field {
 margin-bottom: 15px;
+}
+
+.input-field select {
+    width: 104%;
+    font-size: 17px;
+    text-align: justify;
+    color: #155802;
+    padding-left: 20px;
+    padding-top: 25px;
+    padding-right: 40px;
+    padding-bottom: 25px; 
+    border: 1px solid #000000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+}
+.input-field input:focus,
+.input-field select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
 input[type="text"],

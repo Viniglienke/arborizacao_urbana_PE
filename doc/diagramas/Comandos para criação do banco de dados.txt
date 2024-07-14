@@ -28,6 +28,7 @@ CREATE TABLE arvore (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo_arvore_id INT,
     area_id INT,
+    nome_registrante VARCHAR(255 NOT NULL)
     data_plantio DATE,
     estado_saude VARCHAR(255) NOT NULL,
     FOREIGN KEY (tipo_arvore_id) REFERENCES tipo_de_arvore(id),

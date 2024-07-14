@@ -5,6 +5,7 @@ import './Trees.css';
 
 const Trees = () => {
     const [values, setValues] = useState({
+        usuName: "",
         treeName: "",
         plantingDate: "",
         lifecondition: "",
@@ -26,6 +27,7 @@ const Trees = () => {
         const formattedDate = formatDate(values.plantingDate);
 
         Axios.post("http://localhost:3001/trees", {
+            usuName: values.usuName,
             treeName: values.treeName,
             plantingDate: formattedDate,
             lifecondition: values.lifecondition,
@@ -34,7 +36,7 @@ const Trees = () => {
         .then((response) => {
             console.log(response.data); 
             alert("Árvore registrada com sucesso! Redirecionando...");
-            navigate("/");
+            navigate("/monitoring");
         })
         .catch((error) => {
             console.error("Erro ao registrar árvore:", error);
@@ -57,6 +59,18 @@ const Trees = () => {
                 <div className="input-field">
                     <input
                         type="text"
+                        placeholder="Nome do Registrante"
+                        required
+                        id="usuName"
+                        name="usuName"
+                        value={values.usuName}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="input-field">
+                    <input
+                        type="text"
                         placeholder="Nome Científico da Árvore"
                         required
                         id="treeName"
@@ -67,8 +81,10 @@ const Trees = () => {
                 </div>
                 <div className="input-field">
                     <input
-                        type="date"
+                        type="text"
                         placeholder="Data de Plantio"
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = values.plantingDate ? "date" : "text")}
                         required
                         id="plantingDate"
                         name="plantingDate"
@@ -77,15 +93,18 @@ const Trees = () => {
                     />
                 </div>
                 <div className="input-field">
-                    <input
-                        type="text"
-                        placeholder="Saúde da Árvore"
+                    <select
                         required
                         id="lifecondition"
                         name="lifecondition"
                         value={values.lifecondition}
                         onChange={handleChange}
-                    />
+                    >
+                        <option value="" disabled>Sáude da Árvore</option>
+                        <option value="Saudável">Saudável</option>
+                        <option value="morrendo">Doente</option>
+                        <option value="doente">Morrendo</option>
+                    </select>
                 </div>
                 <div className="input-field">
                     <input

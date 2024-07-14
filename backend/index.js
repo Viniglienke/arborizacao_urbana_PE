@@ -78,28 +78,35 @@ app.post("/login", (req, res) => {
     });
 });
 
-// Rota para registrar árvore
 app.post("/trees", (req, res) => {
-    const { treeName, plantingDate, location, lifecondition } = req.body;
+    const { usuName, treeName, lifecondition, location,plantingDate } = req.body;
+
+    // Verificando se todos os campos necessários estão presentes
+    if (!usuName || !treeName || !lifecondition || !location || !plantingDate) {
+        return res.status(400).json({ msg: "Por favor, forneça todos os campos necessários." });
+    }
 
     const query = `
-        INSERT INTO arvore (tipo_arvore_id, area_id, data_plantio, estado_saude)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO arvore (nome_registrante, tipo_arvore_id, estado_saude,  data_plantio,area_id,)
+        VALUES (?, ?, ?, ?, ?)
     `;
     
     db.run(
         query,
-        [treeName, location, plantingDate, lifecondition],
+        [usuName, treeName, lifecondition, location, plantingDate],
         function (error) {
             if (error) {
                 return res.status(500).json({ error: error.message });
             }
 
-            res.status(201).json({ msg: "Árvore registrada com sucesso!" });
+            // Ao inserir com sucesso, podemos obter o ID inserido
+            const lastID = this.lastID;
+            res.status(201).json({ msg: "Árvore registrada com sucesso!", insertedId: lastID });
         }
     );
 });
 
+// Rota para listar todas as árvores
 app.get("/trees", (req, res) => {
     const query = `
         SELECT * FROM arvore
@@ -114,9 +121,8 @@ app.get("/trees", (req, res) => {
     });
 });
 
-
-
-
-app.listen(3001, () => {
-    console.log("Rodando na porta 3001");
+// Iniciar o servidor
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });

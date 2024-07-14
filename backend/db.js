@@ -34,8 +34,9 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 tipo_arvore_id INTEGER,
                 area_id INTEGER,
-                data_plantio TEXT,
-                estado_saude TEXT NOT NULL,
+                nome_registrante VARCHAR(255) NOT NULL,
+                data_plantio DATE,
+                estado_saude VARCHAR(255) NOT NULL,
                 FOREIGN KEY (tipo_arvore_id) REFERENCES tipo_de_arvore(id),
                 FOREIGN KEY (area_id) REFERENCES area(id)
             )`);

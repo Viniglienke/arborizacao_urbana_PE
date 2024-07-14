@@ -4,7 +4,6 @@ import Navbar from '../components/layout/Navbar';
 import Container from "../components/layout/Container";
 import Home from '../components/pages/Home'
 import Login from '../components/pages/Login';
-import Areas from '../components/pages/Areas';
 import Trees from '../components/pages/Trees';
 import Monitoring from '../components/pages/Monitoring';
 import Contact from '../components/pages/Contact';
@@ -21,14 +20,11 @@ export const AppRouter = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/home" element={<Home />} />
-                    <Route path="/areas" element={<PrivateRoute />}>
-                        <Route path="/areas" element={<Areas />} />
-                    </Route>
                     <Route path="/trees" element={<PrivateRoute />}>
-                        <Route path="/trees" element={<Trees />} />
+                    <Route path="/trees" element={<Trees />} />
                     </Route>
                     <Route path="/monitoring" element={<PrivateRoute />}>
-                        <Route path="/monitoring" element={<Monitoring />} />
+                    <Route path="/monitoring" element={<Monitoring />} />
                     </Route>
                 </Routes>
             </Container>
