@@ -72,7 +72,7 @@ const Trees = () => {
                 </div>
                 <div className="input-field">
                     <input
-                        type="date"
+                        type="text"
                         placeholder="Data de Plantio"
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = values.plantingDate ? "date" : "text")}
