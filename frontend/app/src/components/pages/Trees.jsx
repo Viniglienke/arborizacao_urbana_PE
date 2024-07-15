@@ -29,7 +29,7 @@ const Trees = () => {
         Axios.post("http://localhost:3001/trees", {
             usuName: values.usuName,
             treeName: values.treeName,
-            plantingDate: formattedDate,
+            plantingDate: values.plantingDate,
             lifecondition: values.lifecondition,
             location: values.location
         })
@@ -42,14 +42,6 @@ const Trees = () => {
             console.error("Erro ao registrar árvore:", error);
             alert("Erro ao registrar árvore. Verifique o console para mais detalhes.");
         });
-    };
-
-    const formatDate = (dateString) => {
-        const dateObj = new Date(dateString);
-        const year = dateObj.getFullYear();
-        let month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); 
-        let day = dateObj.getDate().toString().padStart(2, '0'); 
-        return `${year}-${month}-${day}`;
     };
 
     return (
