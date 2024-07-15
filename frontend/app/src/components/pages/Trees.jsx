@@ -24,7 +24,6 @@ const Trees = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const formattedDate = formatDate(values.plantingDate);
 
         Axios.post("http://localhost:3001/trees", {
             usuName: values.usuName,
