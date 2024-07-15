@@ -46,10 +46,10 @@ const Trees = () => {
 
     const formatDate = (dateString) => {
         const dateObj = new Date(dateString);
-        const day = dateObj.getDate();
-        const month = dateObj.getMonth() + 1;
         const year = dateObj.getFullYear();
-        return `${day}/${month}/${year}`;
+        let month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); 
+        let day = dateObj.getDate().toString().padStart(2, '0'); 
+        return `${year}-${month}-${day}`;
     };
 
     return (
@@ -81,7 +81,7 @@ const Trees = () => {
                 </div>
                 <div className="input-field">
                     <input
-                        type="text"
+                        type="date"
                         placeholder="Data de Plantio"
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = values.plantingDate ? "date" : "text")}
@@ -102,8 +102,8 @@ const Trees = () => {
                     >
                         <option value="" disabled>Sáude da Árvore</option>
                         <option value="Saudável">Saudável</option>
-                        <option value="morrendo">Doente</option>
-                        <option value="doente">Morrendo</option>
+                        <option value="Doente">Doente</option>
+                        <option value="Morrendo">Morrendo</option>
                     </select>
                 </div>
                 <div className="input-field">

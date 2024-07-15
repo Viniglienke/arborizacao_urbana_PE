@@ -24,6 +24,7 @@ const Contact = () => {
     emailjs.send("service_vk5hd8d", "template_c3yyd5r", templateParams, "0EZ5fZfY7LfCvIBry")
     .then((response) => {
       console.log("EMAIL ENVIADO", response.status, response.text)
+      alert("Mensagem enviada!")
       setName('')
       setEmail('')
       setMessage('')
@@ -85,7 +86,7 @@ const Contact = () => {
           <button type="submit">Enviar Mensagem</button>
         </form>
       </section>
-      /</div>
+      </div>
   );
 };
 

@@ -1,17 +1,15 @@
 const express = require("express");
 const app = express();
-const sqlite3 = require("sqlite3").verbose();
+const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-// Conectando ao banco de dados SQLite3
-const db = new sqlite3.Database('./biourb.db', (err) => {
-    if (err) {
-        console.error('Erro ao conectar ao banco de dados:', err.message);
-    } else {
-        console.log('Conectado ao banco de dados SQLite3.');
-    }
+const db = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "vini123",
+    database: "biourb",
 });
 
 app.use(express.json());
@@ -19,16 +17,13 @@ app.use(cors());
 
 // Rota para registrar usuário
 app.post("/register", (req, res) => {
-    const cpf = req.body.cpf;
-    const name = req.body.name;
-    const email = req.body.email;
-    const password = req.body.password;
+    const { cpf, name, email, password } = req.body;
 
-    db.get("SELECT * FROM usuario WHERE email = ?", [email], (err, result) => {
+    db.query("SELECT * FROM usuario WHERE email = ?", [email], (err, result) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-        if (result) {
+        if (result.length > 0) {
             return res.status(400).json({ msg: "Email já cadastrado" });
         }
 
@@ -37,10 +32,10 @@ app.post("/register", (req, res) => {
                 return res.status(500).json({ error: err.message });
             }
 
-            db.run(
+            db.query(
                 "INSERT INTO usuario (cpf, nome, email, senha) VALUES (?,?,?,?)",
                 [cpf, name, email, hash],
-                function (error) {
+                (error) => {
                     if (error) {
                         return res.status(500).json({ error: error.message });
                     }
@@ -54,18 +49,18 @@ app.post("/register", (req, res) => {
 
 // Rota para login de usuário
 app.post("/login", (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email, password } = req.body;
 
-    db.get("SELECT * FROM usuario WHERE email = ?", [email], (err, result) => {
+    db.query("SELECT * FROM usuario WHERE email = ?", [email], (err, result) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-        if (!result) {
+        if (result.length === 0) {
             return res.status(404).json({ msg: "Usuário não registrado!" });
         }
 
-        bcrypt.compare(password, result.senha, (error, response) => {
+        const user = result[0];
+        bcrypt.compare(password, user.senha, (error, response) => {
             if (error) {
                 return res.status(500).json({ error: error.message });
             }
@@ -78,8 +73,9 @@ app.post("/login", (req, res) => {
     });
 });
 
+// Rota para registrar árvore
 app.post("/trees", (req, res) => {
-    const { usuName, treeName, lifecondition, location,plantingDate } = req.body;
+    const { usuName, treeName, lifecondition, location, plantingDate } = req.body;
 
     // Verificando se todos os campos necessários estão presentes
     if (!usuName || !treeName || !lifecondition || !location || !plantingDate) {
@@ -87,20 +83,21 @@ app.post("/trees", (req, res) => {
     }
 
     const query = `
-        INSERT INTO arvore (nome_registrante, tipo_arvore_id, estado_saude,  data_plantio,area_id,)
+        INSERT INTO arvore (nome_registrante, nome_cientifico, data_plantio, estado_saude, localizacao)
         VALUES (?, ?, ?, ?, ?)
     `;
-    
-    db.run(
+
+    db.query(
         query,
-        [usuName, treeName, lifecondition, location, plantingDate],
-        function (error) {
+        [usuName, treeName, plantingDate, lifecondition, location],
+        (error, result) => {
             if (error) {
+                console.error("Erro ao inserir árvore:", error);
                 return res.status(500).json({ error: error.message });
             }
 
             // Ao inserir com sucesso, podemos obter o ID inserido
-            const lastID = this.lastID;
+            const lastID = result.insertId;
             res.status(201).json({ msg: "Árvore registrada com sucesso!", insertedId: lastID });
         }
     );
@@ -108,12 +105,11 @@ app.post("/trees", (req, res) => {
 
 // Rota para listar todas as árvores
 app.get("/trees", (req, res) => {
-    const query = `
-        SELECT * FROM arvore
-    `;
+    const query = "SELECT * FROM arvore";
 
-    db.all(query, (error, trees) => {
+    db.query(query, (error, trees) => {
         if (error) {
+            console.error("Erro ao listar árvores:", error);
             return res.status(500).json({ error: error.message });
         }
 
