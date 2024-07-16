@@ -34,6 +34,7 @@ th, td {
     transition: background-color 0.3s ease-in-out;
 }
 
+
 th {
     background-color: #f7f7f7;
     font-weight: bold;
@@ -52,12 +53,35 @@ td button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 403px;
     padding: 8px 16px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    margin: 5px; 
 }
 
 td button:hover {
     background-color: #45a049;
+}
+
+td button.delete-button {
+    background-color: #f44336; 
+}
+
+td button.delete-button:hover {
+    background-color: #e53935; 
+}
+
+.edit-form select {
+    width: 96.8%;
+    padding: 30px;
+}
+
+.cancel {
+    margin-top: 30px;
+}
+
+.edit-form button.update {
+    width: 96.8%;
+    padding: 15px;
 }

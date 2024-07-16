@@ -5,18 +5,8 @@
   margin:  auto;
   flex-wrap: wrap;
   background-color: #ECF5DF;
-
-}
-
-.start {
-  justify-content: flex-start;
-}
-
-.column {
-  flex-direction: column;
-  justify-content: flex-start;
 }
 
 .min-height {
-  min-height: 75%;
+  min-height: 50%;
 }

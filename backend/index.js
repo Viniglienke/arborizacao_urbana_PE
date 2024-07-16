@@ -77,7 +77,6 @@ app.post("/login", (req, res) => {
 app.post("/trees", (req, res) => {
     const { usuName, treeName, lifecondition, location, plantingDate } = req.body;
 
-    // Verificando se todos os campos necessários estão presentes
     if (!usuName || !treeName || !lifecondition || !location || !plantingDate) {
         return res.status(400).json({ msg: "Por favor, forneça todos os campos necessários." });
     }
@@ -87,20 +86,15 @@ app.post("/trees", (req, res) => {
         VALUES (?, ?, ?, ?, ?)
     `;
 
-    db.query(
-        query,
-        [usuName, treeName, plantingDate, lifecondition, location],
-        (error, result) => {
-            if (error) {
-                console.error("Erro ao inserir árvore:", error);
-                return res.status(500).json({ error: error.message });
-            }
-
-            // Ao inserir com sucesso, podemos obter o ID inserido
-            const lastID = result.insertId;
-            res.status(201).json({ msg: "Árvore registrada com sucesso!", insertedId: lastID });
+    db.query(query, [usuName, treeName, plantingDate, lifecondition, location], (error, result) => {
+        if (error) {
+            console.error("Erro ao inserir árvore:", error);
+            return res.status(500).json({ error: error.message });
         }
-    );
+
+        const lastID = result.insertId;
+        res.status(201).json({ msg: "Árvore registrada com sucesso!", insertedId: lastID });
+    });
 });
 
 // Rota para listar todas as árvores
@@ -114,6 +108,52 @@ app.get("/trees", (req, res) => {
         }
 
         res.json(trees);
+    });
+});
+
+// Rota para atualizar árvore
+app.put("/trees/:id", (req, res) => {
+    const { id } = req.params;
+    const { usuName, treeName, lifecondition, location, plantingDate } = req.body;
+
+    if (!usuName || !treeName || !lifecondition || !location || !plantingDate) {
+        return res.status(400).json({ msg: "Por favor, forneça todos os campos necessários." });
+    }
+
+    const query = `
+        UPDATE arvore
+        SET nome_registrante = ?, nome_cientifico = ?, data_plantio = ?, estado_saude = ?, localizacao = ?
+        WHERE id = ?
+    `;
+
+    db.query(
+        query,
+        [usuName, treeName, plantingDate, lifecondition, location, id],
+        (error) => {
+            if (error) {
+                console.error("Erro ao atualizar árvore:", error);
+                return res.status(500).json({ error: error.message });
+            }
+
+            res.json({ msg: "Árvore atualizada com sucesso!" });
+        }
+    );
+});
+
+
+// Rota para excluir uma árvore
+app.delete('/trees/:id', (req, res) => {
+    const { id } = req.params;
+
+    const query = "DELETE FROM arvore WHERE id = ?";
+
+    db.query(query, [id], (error) => {
+        if (error) {
+            console.error("Erro ao excluir árvore:", error);
+            return res.status(500).json({ error: error.message });
+        }
+
+        res.json({ msg: "Árvore excluída com sucesso!" });
     });
 });
 
