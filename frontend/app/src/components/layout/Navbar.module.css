@@ -21,6 +21,7 @@
 .item a {
   color: rgb(0, 0, 0);
   text-decoration: none;
+
 }
 
 .item a:hover {
@@ -29,7 +30,7 @@
 }
 
 .logo {
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.5);
   border-radius: 25%;
   margin-left: 20px;
   margin-top: 0px;
@@ -52,12 +53,13 @@ position: relative;
 font-weight: 1000;
 font-size: 17px;
 -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+box-shadow: 4px 8px 19px -3px rgba(0,0,0,1);
 transition: all 250ms;
 overflow: hidden;
 }
 
 button::before {
+text-decoration: none;
 content: "";
 position: absolute;
 top: 0;
@@ -70,6 +72,10 @@ z-index: -1;
 -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
 box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
 transition: all 250ms
+}
+
+button::before, a{
+  text-decoration: none;
 }
 
 button:hover {

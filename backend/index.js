@@ -8,7 +8,7 @@ const saltRounds = 10;
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "vini123",
+    password: "Julia,wilian2409",
     database: "biourb",
 });
 
