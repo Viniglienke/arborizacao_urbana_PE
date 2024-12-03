@@ -88,7 +88,6 @@ button:hover::before {
   width: 100%;
 }
 
-
 @media (max-width: 1024px) {
   .navbar {
     flex-direction: column;
