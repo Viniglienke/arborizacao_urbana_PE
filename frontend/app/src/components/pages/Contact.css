@@ -1,6 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
 .contact-container {
-  max-width: 600px; /* Define um tamanho máximo */
-  width: 90%; /* Usa 90% da largura da tela em dispositivos menores */
+  display: flex;  
+  flex-direction: column;
+  max-width: 600px;
+  width: 90%;
   color: #555;
   font-size: 1.2em;
   margin: 0 auto;
@@ -17,14 +23,14 @@
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centraliza horizontalmente os elementos dentro do cabeçalho */
+  align-items: center;
 }
 
 .contact-header .logo {
-  max-width: 150px; /* Define um tamanho máximo para a logo */
+  max-width: 150px;
   width: 100%;
   margin-bottom: 10px;
-  height: auto; /* Mantém a proporção da imagem */
+  height: auto;
 }
 
 .contact-header h1 {
@@ -48,7 +54,7 @@
 
 .input-field input,
 .input-field textarea {
-  width: 100%; /* Garante que os campos ocupem toda a largura disponível */
+  width: 100%;
   background: transparent;
   outline: none;
   border: 1px solid rgb(0, 0, 0);
@@ -56,12 +62,12 @@
   font-size: 16px;
   color: #155802;
   padding: 10px 15px;
-  box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+  box-sizing: border-box;
 }
 
 .input-field textarea {
-  height: 100px; /* Define uma altura padrão */
-  resize: vertical; /* Permite redimensionar apenas na vertical */
+  height: 100px;
+  resize: vertical;
   color: black;
 }
 
@@ -77,10 +83,10 @@ button[type="submit"] {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, padding 0.3s ease, font-size 0.3s ease;
-  width: 100%; /* Ajusta o botão para ocupar toda a largura do contêiner */
-  max-width: 300px; /* Define um tamanho máximo para o botão */
-  margin: 10px auto; /* Centraliza o botão */
-  box-sizing: border-box; /* Inclui padding no cálculo da largura */
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+  box-sizing: border-box;
 }
 
 button[type="submit"]:hover {
@@ -101,9 +107,9 @@ button[type="submit"]:hover {
   }
 
   button[type="submit"] {
-    font-size: 14px; 
+    font-size: 14px;
     padding: 8px 16px;
-    width: 100%; /* Garante que o botão se ajuste em telas menores */
+    width: 100%;
   }
 
   .input-field input,
@@ -113,13 +119,13 @@ button[type="submit"]:hover {
   }
 
   .contact-header .logo {
-    max-width: 120px; /* Ajusta o tamanho da logo para telas menores */
+    max-width: 120px;
   }
 }
 
 @media (max-width: 480px) {
   .contact-container {
-    padding: 10px; /* Reduz o padding para telas menores */
+    padding: 10px;
   }
 
   .contact-header h1 {
@@ -132,17 +138,17 @@ button[type="submit"]:hover {
 
   .input-field input,
   .input-field textarea {
-    font-size: 12px; /* Reduz o tamanho da fonte em campos menores */
+    font-size: 12px;
     padding: 6px 10px;
   }
 
   button[type="submit"] {
     font-size: 12px;
     padding: 6px 12px;
-    width: 100%; /* Mantém o botão ajustado */
+    width: 100%;
   }
 
   .contact-header .logo {
-    max-width: 100px; /* Reduz ainda mais a largura da logo em telas muito pequenas */
+    max-width: 100px;
   }
 }
