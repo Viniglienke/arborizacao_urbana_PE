@@ -1,15 +1,12 @@
 .contact-container {
-  width: 100%;
+  max-width: 600px; /* Define um tamanho máximo */
+  width: 90%; /* Usa 90% da largura da tela em dispositivos menores */
   color: #555;
   font-size: 1.2em;
-  margin: 0 500px;
-  padding-left: 20px;
-  padding-top: 20px;
-  padding-right: 40px;
-  padding-bottom: 20px; 
+  margin: 0 auto;
+  padding: 20px;
   align-items: center;
   text-align: center;
-  font-size: 1.2em;
   border-radius: 30px;
   margin-top: 10px;
   background-color: #f0f0f0;
@@ -18,6 +15,16 @@
 
 .contact-header {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente os elementos dentro do cabeçalho */
+}
+
+.contact-header .logo {
+  max-width: 150px; /* Define um tamanho máximo para a logo */
+  width: 100%;
+  margin-bottom: 10px;
+  height: auto; /* Mantém a proporção da imagem */
 }
 
 .contact-header h1 {
@@ -33,36 +40,29 @@
 .input-field {
   margin-bottom: 15px;
   text-align: left;
-  border: #000000;
 }
 
 .input-field label {
   display: block;
 }
 
-.input-field input{
-  width: 92%;
-  height: 40px;
+.input-field input,
+.input-field textarea {
+  width: 100%; /* Garante que os campos ocupem toda a largura disponível */
   background: transparent;
   outline: none;
   border: 1px solid rgb(0, 0, 0);
   border-radius: 5px;
   font-size: 16px;
   color: #155802;
-  padding: 20px 45px 20px 25px;
+  padding: 10px 15px;
+  box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
 }
 
 .input-field textarea {
-  width: 98%;
-  padding: 10px;
-  font-size: 1em;
-  border-radius: 5px;
-  background-color: transparent;
-}
-
-.input-field textarea {
-  resize: vertical;
-  color: black
+  height: 100px; /* Define uma altura padrão */
+  resize: vertical; /* Permite redimensionar apenas na vertical */
+  color: black;
 }
 
 button[type="submit"] {
@@ -76,9 +76,73 @@ button[type="submit"] {
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, padding 0.3s ease, font-size 0.3s ease;
+  width: 100%; /* Ajusta o botão para ocupar toda a largura do contêiner */
+  max-width: 300px; /* Define um tamanho máximo para o botão */
+  margin: 10px auto; /* Centraliza o botão */
+  box-sizing: border-box; /* Inclui padding no cálculo da largura */
 }
 
 button[type="submit"]:hover {
   background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 15px;
+  }
+
+  .contact-header h1 {
+    font-size: 2em;
+  }
+
+  .contact-header p {
+    font-size: 1em;
+  }
+
+  button[type="submit"] {
+    font-size: 14px; 
+    padding: 8px 16px;
+    width: 100%; /* Garante que o botão se ajuste em telas menores */
+  }
+
+  .input-field input,
+  .input-field textarea {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .contact-header .logo {
+    max-width: 120px; /* Ajusta o tamanho da logo para telas menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-container {
+    padding: 10px; /* Reduz o padding para telas menores */
+  }
+
+  .contact-header h1 {
+    font-size: 1.8em;
+  }
+
+  .contact-header p {
+    font-size: 0.9em;
+  }
+
+  .input-field input,
+  .input-field textarea {
+    font-size: 12px; /* Reduz o tamanho da fonte em campos menores */
+    padding: 6px 10px;
+  }
+
+  button[type="submit"] {
+    font-size: 12px;
+    padding: 6px 12px;
+    width: 100%; /* Mantém o botão ajustado */
+  }
+
+  .contact-header .logo {
+    max-width: 100px; /* Reduz ainda mais a largura da logo em telas muito pequenas */
+  }
 }
