@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import styles from "./Navbar.module.css";
@@ -6,6 +6,7 @@ import logo from "../../img/logo.jpeg";
 
 function Navbar() {
   const { signed, signOut } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   return (
     <div className={styles.navbar}>
@@ -30,9 +31,14 @@ function Navbar() {
             <button className={styles.button} onClick={signOut}>Logout</button>
           </li>
         ) : (
-          <button className={styles.login}>
-          <Link to="/">Login</Link>
-        </button>
+          <li className={styles.item}>
+            <button
+              className={styles.button}
+              onClick={() => navigate("/")}
+            >
+              Login
+            </button>
+          </li>
         )}
       </ul>
     </div>
