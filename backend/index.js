@@ -1,118 +1,103 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql2");
+const { Pool } = require("pg");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "vini123",
-    database: "biourb",
+const db = new Pool({
+    host: "dpg-ctcddfbtq21c73foih9g-a.oregon-postgres.render.com",
+    user: "biourb_yyhn_user",
+    password: "sQBzBPz3o2eBJ8KcV0ssoYo4gYpPjlkm",
+    database: "biourb_yyhn",
+    port: 5432,
 });
 
 app.use(express.json());
 app.use(cors());
 
 // Rota para registrar usuário
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
     const { cpf, name, email, password } = req.body;
 
-    db.query("SELECT * FROM usuario WHERE email = ?", [email], (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        if (result.length > 0) {
+    try {
+        const userCheck = await db.query("SELECT * FROM usuario WHERE email = $1", [email]);
+        if (userCheck.rows.length > 0) {
             return res.status(400).json({ msg: "Email já cadastrado" });
         }
 
-        bcrypt.hash(password, saltRounds, (err, hash) => {
-            if (err) {
-                return res.status(500).json({ error: err.message });
-            }
+        const hash = await bcrypt.hash(password, saltRounds);
 
-            db.query(
-                "INSERT INTO usuario (cpf, nome, email, senha) VALUES (?,?,?,?)",
-                [cpf, name, email, hash],
-                (error) => {
-                    if (error) {
-                        return res.status(500).json({ error: error.message });
-                    }
+        await db.query(
+            "INSERT INTO usuario (cpf, nome, email, senha) VALUES ($1, $2, $3, $4)",
+            [cpf, name, email, hash]
+        );
 
-                    res.status(201).json({ msg: "Usuário cadastrado com sucesso" });
-                }
-            );
-        });
-    });
+        res.status(201).json({ msg: "Usuário cadastrado com sucesso" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // Rota para login de usuário
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
-    db.query("SELECT * FROM usuario WHERE email = ?", [email], (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        if (result.length === 0) {
+    try {
+        const userCheck = await db.query("SELECT * FROM usuario WHERE email = $1", [email]);
+
+        if (userCheck.rows.length === 0) {
             return res.status(404).json({ msg: "Usuário não registrado!" });
         }
 
-        const user = result[0];
-        bcrypt.compare(password, user.senha, (error, response) => {
-            if (error) {
-                return res.status(500).json({ error: error.message });
-            }
-            if (response) {
-                res.json({ msg: "Usuário logado" });
-            } else {
-                res.status(401).json({ msg: "Senha incorreta" });
-            }
-        });
-    });
+        const user = userCheck.rows[0];
+        const isPasswordValid = await bcrypt.compare(password, user.senha);
+
+        if (isPasswordValid) {
+            res.json({ msg: "Usuário logado" });
+        } else {
+            res.status(401).json({ msg: "Senha incorreta" });
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // Rota para registrar árvore
-app.post("/trees", (req, res) => {
+app.post("/trees", async (req, res) => {
     const { usuName, treeName, lifecondition, location, plantingDate } = req.body;
 
     if (!usuName || !treeName || !lifecondition || !location || !plantingDate) {
         return res.status(400).json({ msg: "Por favor, forneça todos os campos necessários." });
     }
 
-    const query = `
-        INSERT INTO arvore (nome_registrante, nome_cientifico, data_plantio, estado_saude, localizacao)
-        VALUES (?, ?, ?, ?, ?)
-    `;
+    try {
+        const result = await db.query(
+            `
+            INSERT INTO arvore (nome_registrante, nome_cientifico, data_plantio, estado_saude, localizacao)
+            VALUES ($1, $2, $3, $4, $5) RETURNING id
+            `,
+            [usuName, treeName, plantingDate, lifecondition, location]
+        );
 
-    db.query(query, [usuName, treeName, plantingDate, lifecondition, location], (error, result) => {
-        if (error) {
-            console.error("Erro ao inserir árvore:", error);
-            return res.status(500).json({ error: error.message });
-        }
-
-        const lastID = result.insertId;
-        res.status(201).json({ msg: "Árvore registrada com sucesso!", insertedId: lastID });
-    });
+        res.status(201).json({ msg: "Árvore registrada com sucesso!", insertedId: result.rows[0].id });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // Rota para listar todas as árvores
-app.get("/trees", (req, res) => {
-    const query = "SELECT * FROM arvore";
-
-    db.query(query, (error, trees) => {
-        if (error) {
-            console.error("Erro ao listar árvores:", error);
-            return res.status(500).json({ error: error.message });
-        }
-
-        res.json(trees);
-    });
+app.get("/trees", async (req, res) => {
+    try {
+        const result = await db.query("SELECT * FROM arvore");
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // Rota para atualizar árvore
-app.put("/trees/:id", (req, res) => {
+app.put("/trees/:id", async (req, res) => {
     const { id } = req.params;
     const { usuName, treeName, lifecondition, location, plantingDate } = req.body;
 
@@ -120,41 +105,32 @@ app.put("/trees/:id", (req, res) => {
         return res.status(400).json({ msg: "Por favor, forneça todos os campos necessários." });
     }
 
-    const query = `
-        UPDATE arvore
-        SET nome_registrante = ?, nome_cientifico = ?, data_plantio = ?, estado_saude = ?, localizacao = ?
-        WHERE id = ?
-    `;
+    try {
+        await db.query(
+            `
+            UPDATE arvore
+            SET nome_registrante = $1, nome_cientifico = $2, data_plantio = $3, estado_saude = $4, localizacao = $5
+            WHERE id = $6
+            `,
+            [usuName, treeName, plantingDate, lifecondition, location, id]
+        );
 
-    db.query(
-        query,
-        [usuName, treeName, plantingDate, lifecondition, location, id],
-        (error) => {
-            if (error) {
-                console.error("Erro ao atualizar árvore:", error);
-                return res.status(500).json({ error: error.message });
-            }
-
-            res.json({ msg: "Árvore atualizada com sucesso!" });
-        }
-    );
+        res.json({ msg: "Árvore atualizada com sucesso!" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
-
 // Rota para excluir uma árvore
-app.delete('/trees/:id', (req, res) => {
+app.delete("/trees/:id", async (req, res) => {
     const { id } = req.params;
 
-    const query = "DELETE FROM arvore WHERE id = ?";
-
-    db.query(query, [id], (error) => {
-        if (error) {
-            console.error("Erro ao excluir árvore:", error);
-            return res.status(500).json({ error: error.message });
-        }
-
+    try {
+        await db.query("DELETE FROM arvore WHERE id = $1", [id]);
         res.json({ msg: "Árvore excluída com sucesso!" });
-    });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // Iniciar o servidor

@@ -1,5 +1,3 @@
-CREATE DATABASE biourb;
-
 CREATE TABLE usuario (
     cpf VARCHAR(20) PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -8,9 +6,9 @@ CREATE TABLE usuario (
 );
 
 CREATE TABLE arvore (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome_registrante VARCHAR(255 NOT NULL)
-    nome_cientifico VARCHAR(255 NOT NULL)
+    id SERIAL PRIMARY KEY,
+    nome_registrante VARCHAR(255) NOT NULL,
+    nome_cientifico VARCHAR(255) NOT NULL,
     data_plantio DATE,
     estado_saude VARCHAR(255) NOT NULL,
     localizacao TEXT
