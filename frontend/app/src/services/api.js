@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: "https://arborizacao-urbana-5t3godv48-viniglienkes-projects.vercel.app",
 });

@@ -38,7 +38,7 @@ const Register = () => {
   // Função que é chamada quando o formulário é enviado
   const handleClickRegister = (e) => {
     e.preventDefault();
-    Axios.post("http://localhost:3001/register", {
+    Axios.post("https://arborizacao-urbana-5t3godv48-viniglienkes-projects.vercel.app/register", {
       cpf: values.cpf,
       name: values.name,
       email: values.email,

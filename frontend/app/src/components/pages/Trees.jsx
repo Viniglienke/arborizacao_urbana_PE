@@ -25,7 +25,7 @@ const Trees = () => {
         e.preventDefault();
 
 
-        Axios.post("http://localhost:3001/trees", {
+        Axios.post("https://arborizacao-urbana-5t3godv48-viniglienkes-projects.vercel.app/trees", {
             usuName: values.usuName,
             treeName: values.treeName,
             plantingDate: values.plantingDate,
