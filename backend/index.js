@@ -38,6 +38,12 @@ app.use(allowCors)
 db.connect()
     .then(() => console.log("Conexão com o banco de dados bem-sucedida"))
     .catch(err => console.error("Erro ao conectar ao banco de dados:", err.message));
+    
+console.log("Iniciando consulta ao banco de dados...");
+const result = await db.query("SELECT * FROM arvore");
+console.log("Consulta concluída, enviando resposta...");
+res.json(result.rows);
+
 
 // Rota para registrar usuário
 app.post("/register", async (req, res) => {
