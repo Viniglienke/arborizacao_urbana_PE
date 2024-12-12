@@ -21,7 +21,7 @@ const Monitoring = () => {
 
     const fetchTrees = async () => {
         try {
-            const response = await axios.get('https://arborizacao-urbana-inezl03v5-viniglienkes-projects.vercel.app/trees');
+            const response = await axios.get('https://biourb.vercel.app/trees');
             setTrees(response.data);
         } catch (error) {
             console.error("Erro ao buscar árvores:", error);
@@ -42,7 +42,7 @@ const Monitoring = () => {
 
     const handleDeleteClick = async (id) => {
         try {
-            await axios.delete(`https://arborizacao-urbana-inezl03v5-viniglienkes-projects.vercel.app/trees/${id}`);
+            await axios.delete(`https://biourb.vercel.app/trees/${id}`);
             fetchTrees();
         } catch (error) {
             console.error("Erro ao excluir árvore:", error);
@@ -57,7 +57,7 @@ const Monitoring = () => {
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`https://arborizacao-urbana-inezl03v5-viniglienkes-projects.vercel.app/trees/${currentTree.id}`, {
+            await axios.put(`https://biourb.vercel.app/trees/${currentTree.id}`, {
                 usuName: currentTree.nome_registrante,
                 treeName: currentTree.nome_cientifico,
                 plantingDate: currentTree.data_plantio,

@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://biourb.vercel.app/",
+  baseURL: "https://biourb.vercel.app",
 });
