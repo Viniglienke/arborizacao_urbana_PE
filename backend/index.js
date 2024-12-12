@@ -15,11 +15,9 @@ const db = new Pool({
 
 
 app.use(express.json());
-const cors = require('cors');
 const corsOptions = {
-    origin: 'https://biourb.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    credentials: true,
+    origin: ['https://biourb.vercel.app']
 };
 
 app.use(cors(corsOptions));
