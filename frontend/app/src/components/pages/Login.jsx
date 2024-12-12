@@ -4,15 +4,6 @@ import { Link, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import "./Login.css";
-import axios from 'axios';
-
-axios.get('https://biourb.vercel.app/trees')
-  .then(response => {
-    console.log('Árvores:', response.data);
-  })
-  .catch(error => {
-    console.error('Erro:', error);
-  });
 
 
 const Login = () => {
