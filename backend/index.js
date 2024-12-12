@@ -11,6 +11,9 @@ const db = new Pool({
     password: "sQBzBPz3o2eBJ8KcV0ssoYo4gYpPjlkm",
     database: "biourb_yyhn",
     port: 5432,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 
 app.use(express.json());
