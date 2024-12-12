@@ -25,7 +25,7 @@ const Trees = () => {
         e.preventDefault();
 
 
-        Axios.post("https://biourb.vercel.app/trees", {
+        Axios.post("https://arborizacao-urbana-pe.vercel.app/trees", {
             usuName: values.usuName,
             treeName: values.treeName,
             plantingDate: values.plantingDate,
