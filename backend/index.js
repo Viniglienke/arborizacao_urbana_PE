@@ -31,13 +31,6 @@ const allowCors = fn => async (req, res) => {
     return await fn(req, res)
 }
 
-const handler = (req, res) => {
-    const d = new Date()
-    res.end(d.toString())
-}
-
-module.exports = allowCors(handler) 
-
 app.use(allowCors)
 
 // Rota para registrar usuário
