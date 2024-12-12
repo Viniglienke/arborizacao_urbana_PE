@@ -5,6 +5,7 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
+// Configuração do banco de dados
 const db = new Pool({
     host: "dpg-ctcddfbtq21c73foih9g-a.oregon-postgres.render.com",
     user: "biourb_yyhn_user",
@@ -16,34 +17,16 @@ const db = new Pool({
     },
 });
 
-app.use(express.json());
-const allowCors = fn => async (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    // another common pattern
-    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-    if (req.method === 'OPTIONS') {
-        res.status(200).end()
-        return
-    }
-    return await fn(req, res)
-}
+// Middleware para CORS
+app.use(cors());
 
-app.use(allowCors)
+// Middleware para JSON
+app.use(express.json());
+
+// Conectar ao banco de dados
 db.connect()
     .then(() => console.log("Conexão com o banco de dados bem-sucedida"))
     .catch(err => console.error("Erro ao conectar ao banco de dados:", err.message));
-    
-console.log("Iniciando consulta ao banco de dados...");
-const result = await db.query("SELECT * FROM arvore");
-console.log("Consulta concluída, enviando resposta...");
-res.json(result.rows);
-
 
 // Rota para registrar usuário
 app.post("/register", async (req, res) => {
@@ -102,10 +85,8 @@ app.post("/trees", async (req, res) => {
 
     try {
         const result = await db.query(
-            `
-            INSERT INTO arvore (nome_registrante, nome_cientifico, data_plantio, estado_saude, localizacao)
-            VALUES ($1, $2, $3, $4, $5) RETURNING id
-            `,
+            `INSERT INTO arvore (nome_registrante, nome_cientifico, data_plantio, estado_saude, localizacao)
+            VALUES ($1, $2, $3, $4, $5) RETURNING id`,
             [usuName, treeName, plantingDate, lifecondition, location]
         );
 
@@ -136,11 +117,9 @@ app.put("/trees/:id", async (req, res) => {
 
     try {
         await db.query(
-            `
-            UPDATE arvore
+            `UPDATE arvore
             SET nome_registrante = $1, nome_cientifico = $2, data_plantio = $3, estado_saude = $4, localizacao = $5
-            WHERE id = $6
-            `,
+            WHERE id = $6`,
             [usuName, treeName, plantingDate, lifecondition, location, id]
         );
 
