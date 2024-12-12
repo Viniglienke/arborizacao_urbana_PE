@@ -16,8 +16,8 @@ const db = new Pool({
 
 app.use(express.json());
 const corsOptions = {
-    credentials: true,
-    origin: ['https://arborizacao-urbana-pe.vercel.app'],
+    credentials: false,
+    origin: ['https://biourb.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 };
