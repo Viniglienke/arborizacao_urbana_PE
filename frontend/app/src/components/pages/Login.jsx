@@ -5,6 +5,15 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import "./Login.css";
 
+axios.get('https://biourb.vercel.app/trees')
+  .then(response => {
+    console.log('Árvores:', response.data);
+  })
+  .catch(error => {
+    console.error('Erro:', error);
+  });
+
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
