@@ -10,12 +10,9 @@
         {
             "src": "(.*)",
             "dest": "./index.js",
-            "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://biourb.vercel.app"
-        }
-      ]
+            "headers": {
+                "access-control-allow-origin": "*"
+            }
         }
     ]
 }
