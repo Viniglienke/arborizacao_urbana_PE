@@ -13,8 +13,12 @@ const db = new Pool({
     port: 5432,
 });
 
+const corsOptions = {
+    origin: "https://biourb.vercel.app"
+  };
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Rota para registrar usuário
 app.post("/register", async (req, res) => {
