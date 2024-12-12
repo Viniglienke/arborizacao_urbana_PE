@@ -32,6 +32,9 @@ const allowCors = fn => async (req, res) => {
 }
 
 app.use(allowCors)
+db.connect()
+    .then(() => console.log("Conexão com o banco de dados bem-sucedida"))
+    .catch(err => console.error("Erro ao conectar ao banco de dados:", err.message));
 
 // Rota para registrar usuário
 app.post("/register", async (req, res) => {
