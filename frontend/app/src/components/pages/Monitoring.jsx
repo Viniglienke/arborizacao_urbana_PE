@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 import './Monitoring.css';
+import { AuthContext } from '../../context/AuthContext'; // Importe o contexto de autenticação
 
 const Monitoring = () => {
     const [trees, setTrees] = useState([]);
@@ -14,6 +15,8 @@ const Monitoring = () => {
         estado_saude: '',
         localizacao: ''
     });
+
+    const { user } = useContext(AuthContext); // Acesse o usuário logado
 
     useEffect(() => {
         fetchTrees();
@@ -155,8 +158,13 @@ const Monitoring = () => {
                                 <td>{tree.estado_saude}</td>
                                 <td>{tree.localizacao}</td>
                                 <td>
-                                    <button onClick={() => handleEditClick(tree)}>Editar</button>
-                                    <button className="delete-button" onClick={() => handleDeleteClick(tree.id)}>Excluir</button>
+                                    {/* Verifique se o nome do registrante é igual ao e-mail do usuário logado */}
+                                    {user && tree.nome_registrante === user.nome && (
+                                        <>
+                                            <button onClick={() => handleEditClick(tree)}>Editar</button>
+                                            <button className="delete-button" onClick={() => handleDeleteClick(tree.id)}>Excluir</button>
+                                        </>
+                                    )}
                                 </td>
                             </tr>
                         ))}

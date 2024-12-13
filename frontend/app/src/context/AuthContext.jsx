@@ -1,6 +1,4 @@
-import { createContext } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { api } from "../services/api";
 
@@ -15,7 +13,9 @@ export const AuthProvider = ({ children }) => {
       const storageToken = localStorage.getItem("@Auth:token");
 
       if (storageUser && storageToken) {
-        setUser(storageUser);
+        const parsedUser = JSON.parse(storageUser);
+        setUser(parsedUser);
+        api.defaults.headers.common["Authorization"] = `Bearer ${storageToken}`;
       }
     };
     loadingStoreData();
@@ -27,10 +27,8 @@ export const AuthProvider = ({ children }) => {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        setUser(response.data);
-        api.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data.token}`;
+        setUser(response.data.user);  // Armazenando apenas os dados do usuário
+        api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
 
         localStorage.setItem("@Auth:user", JSON.stringify(response.data.user));
         localStorage.setItem("@Auth:token", response.data.token);
@@ -43,7 +41,6 @@ export const AuthProvider = ({ children }) => {
   const signOut = () => {
     localStorage.clear();
     setUser(null);
-    return <Navigate to="/" />;
   };
 
   return (
