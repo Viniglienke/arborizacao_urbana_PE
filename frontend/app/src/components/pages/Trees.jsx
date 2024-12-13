@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import { AuthContext } from "../context/AuthContext"; // Importar o contexto de autenticação
+import { AuthContext } from "../../context/AuthContext.jsx"; // Importar o contexto de autenticação
 import './Trees.css';
 
 const Trees = () => {
