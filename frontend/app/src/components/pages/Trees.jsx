@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+import { AuthContext } from "../context/AuthContext"; // Importar o contexto de autenticação
 import './Trees.css';
 
 const Trees = () => {
+    const { user } = useContext(AuthContext); // Obter o usuário logado do contexto
+    const navigate = useNavigate();
+
     const [values, setValues] = useState({
-        usuName: "",
+        usuName: user?.name || "", // Inicializar com o nome do usuário logado
         treeName: "",
         plantingDate: "",
         lifecondition: "",
         location: ""
     });
-
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setValues((prevValues) => ({
@@ -23,7 +25,6 @@ const Trees = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
 
         Axios.post("https://arborizacao-urbana-pe.vercel.app/trees", {
             usuName: values.usuName,
@@ -54,8 +55,9 @@ const Trees = () => {
                         required
                         id="usuName"
                         name="usuName"
-                        value={values.usuName}
+                        value={values.usuName} // Preenchido automaticamente
                         onChange={handleChange}
+                        readOnly // Tornar o campo somente leitura
                     />
                 </div>
 
