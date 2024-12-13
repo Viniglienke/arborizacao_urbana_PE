@@ -73,6 +73,7 @@ const Monitoring = () => {
 
     const formatDate = (dateString) => {
         const formattedDate = new Date(dateString);
+        formattedDate.setHours(0, 0, 0, 0);
         return format(formattedDate, 'dd/MM/yyyy');
     };
 
