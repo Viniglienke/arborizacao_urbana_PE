@@ -71,15 +71,6 @@ const Monitoring = () => {
         }
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        // Forçar a data para ser exibida no formato 'DD/MM/YYYY' sem considerar a hora
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // meses começam do 0
-        const year = date.getFullYear();
-        
-        return `${day}/${month}/${year}`;
-    };
 
     return (
         <div className="monitoring-container">
@@ -156,7 +147,7 @@ const Monitoring = () => {
                                 <td>{tree.id}</td>
                                 <td>{tree.nome_registrante}</td>
                                 <td>{tree.nome_cientifico}</td>
-                                <td>{formatDate(tree.data_plantio)}</td>
+                                <td>{tree.data_plantio}</td>
                                 <td>{tree.estado_saude}</td>
                                 <td>{tree.localizacao}</td>
                                 <td>
