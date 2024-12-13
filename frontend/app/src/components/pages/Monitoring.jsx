@@ -71,6 +71,15 @@ const Monitoring = () => {
         }
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getUTCDate()).padStart(2, '0'); // Pega o dia UTC
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Pega o mês UTC, mas adiciona 1 porque começa em 0
+        const year = date.getUTCFullYear(); // Pega o ano UTC
+
+        return `${day}/${month}/${year}`;
+    };
+
 
     return (
         <div className="monitoring-container">
@@ -147,7 +156,7 @@ const Monitoring = () => {
                                 <td>{tree.id}</td>
                                 <td>{tree.nome_registrante}</td>
                                 <td>{tree.nome_cientifico}</td>
-                                <td>{tree.data_plantio}</td>
+                                <td>{formatDate(tree.data_plantio)}</td>
                                 <td>{tree.estado_saude}</td>
                                 <td>{tree.localizacao}</td>
                                 <td>
