@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
       const storageToken = localStorage.getItem("@Auth:token");
 
       if (storageUser && storageToken) {
-        setUser(JSON.parse(storageUser));
+        setUser(storageUser);
       }
     };
     loadingStoreData();
@@ -24,11 +24,10 @@ export const AuthProvider = ({ children }) => {
   const signIn = async ({ email, password }) => {
     try {
       const response = await api.post("/login", { email, password });
-      console.log("Resposta da API:", response.data); // <-- Adicione este log
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        setUser(response.data); // Certifique-se de que só o "user" está sendo definido
+        setUser(response.data);
         api.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.data.token}`;
@@ -37,7 +36,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("@Auth:token", response.data.token);
       }
     } catch (error) {
-      console.log("Erro no login:", error);
+      console.log(error);
     }
   };
 
