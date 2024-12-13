@@ -73,7 +73,8 @@ const Monitoring = () => {
 
     const formatDate = (dateString) => {
         const formattedDate = new Date(dateString);
-        formattedDate.setHours(0, 0, 0, 0);
+        const offset = formattedDate.getTimezoneOffset();
+        formattedDate.setMinutes(formattedDate.getMinutes() - offset);
         return format(formattedDate, 'dd/MM/yyyy');
     };
 
