@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        setUser(response.data.user); // Certifique-se de que só o "user" está sendo definido
+        setUser(response.data); // Certifique-se de que só o "user" está sendo definido
         api.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.data.token}`;
