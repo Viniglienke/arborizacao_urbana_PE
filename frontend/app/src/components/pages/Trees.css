@@ -1,7 +1,7 @@
 ** {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   color: #000000;
-  box-sizing: border-box; /* Garante que padding não afete largura */
+  box-sizing: border-box; 
 }
 
 .container {
@@ -12,7 +12,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
   background-color: #f0f0f0;
-  display: flex; /* Centraliza os elementos dentro do container */
+  display: flex; 
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -20,7 +20,7 @@
 
 .input-field {
   margin-bottom: 15px;
-  width: 100%; /* Ocupa toda a largura do container */
+  width: 100%; 
 }
 
 .input-field select,
@@ -32,7 +32,7 @@ textarea {
   font-size: 16px;
   border: 1px solid #000000;
   border-radius: 4px;
-  margin: 0 auto; /* Centraliza horizontalmente */
+  margin: 0 auto; 
 }
 
 .input-field select {
@@ -93,9 +93,9 @@ button[type="submit"]:hover {
 
 @media (max-width: 480px) {
   .container {
-    margin: 20px auto; /* Margem reduzida e centralizada */
+    margin: 20px auto; 
     padding: 10px;
-    width: 90%; /* Reduz a largura para caber na tela */
+    width: 90%; 
   }
 
   .input-field {
