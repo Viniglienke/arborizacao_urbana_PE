@@ -1,141 +1,96 @@
+/* Container principal */
 .monitoring-container {
-    width: 90%; 
-    max-width: 1200px; 
-    margin: 50px auto; 
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .monitoring-title {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2em;
-    font-weight: bold;
-    color: #333333;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #fafafa;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+  width: 90%; 
+  max-width: 1200px;
+  margin: 50px auto; 
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Adiciona rolagem horizontal em telas pequenas */
+}
+
+/* Título */
+.monitoring-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* Tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 12px;
+  white-space: nowrap; /* Evita quebra de texto */
+  transition: background-color 0.3s ease-in-out;
+}
+
+th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  color: #555555;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e9e9e9;
+}
+
+/* Botões */
+td button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin: 5px;
+}
+
+td button:hover {
+  background-color: #45a049;
+}
+
+td button.delete-button {
+  background-color: #f44336;
+}
+
+td button.delete-button:hover {
+  background-color: #e53935;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
   th, td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 12px;
-    transition: background-color 0.3s ease-in-out;
+    font-size: 14px; /* Reduz o tamanho da fonte */
+    padding: 8px;
   }
-  
-  th {
-    background-color: #f7f7f7;
-    font-weight: bold;
-    color: #555555;
+}
+
+@media (max-width: 480px) {
+  .monitoring-container {
+    padding: 10px;
   }
-  
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
+
+  th, td {
+    font-size: 12px; /* Reduz ainda mais o tamanho da fonte */
+    padding: 6px;
   }
-  
-  tr:hover {
-    background-color: #e9e9e9;
-  }
-  
-  td button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 403px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    margin: 5px;
-  }
-  
-  td button:hover {
-    background-color: #45a049;
-  }
-  
-  td button.delete-button {
-    background-color: #f44336;
-  }
-  
-  td button.delete-button:hover {
-    background-color: #e53935;
-  }
-  
-  .edit-form select {
-    width: 100%; 
-    padding: 15px; 
-  }
-  
-  .cancel {
-    margin-top: 20px; 
-  }
-  
-  .edit-form button.update {
-    width: 100%; 
-    padding: 15px;
-  }
-  
-  
-  @media (max-width: 768px) {
-    .monitoring-container {
-      padding: 15px;
-      margin: 30px auto;
-    }
-  
-    .monitoring-title {
-      font-size: 1.8em; 
-    }
-  
-    th, td {
-      font-size: 14px; 
-      padding: 10px;
-    }
-  
-    td button {
-      padding: 6px 12px; 
-      font-size: 14px;
-    }
-  
-    .edit-form select,
-    .edit-form button.update {
-      font-size: 14px; 
-      padding: 12px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .monitoring-container {
-      margin: 20px auto; 
-      padding: 10px;
-    }
-  
-    .monitoring-title {
-      font-size: 1.5em; 
-    }
-  
-    th, td {
-      font-size: 12px; 
-      padding: 8px;
-    }
-  
-    td button {
-      padding: 5px 10px; 
-      font-size: 12px;
-    }
-  
-    .edit-form select,
-    .edit-form button.update {
-      font-size: 12px; 
-      padding: 10px;
-    }
-  }
-  
+}
